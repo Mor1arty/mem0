@@ -1,6 +1,6 @@
 import json
 
-from mem0.configs.prompts import FACT_RETRIEVAL_PROMPT
+from ..configs.prompts import FACT_RETRIEVAL_PROMPT
 
 
 def get_fact_retrieval_messages(message):
@@ -21,10 +21,10 @@ def parse_messages(messages):
 def format_entities(entities):
     if not entities:
         return ""
-    
+        
     formatted_lines = []
     for entity in entities:
-        simplified = f"{entity['source']} -- {entity['relation'].upper()} -- {entity['destination']}"
+        simplified = f"{entity['source'] if 'source' in entity else entity['source_entity']} -- {entity['relation'].upper()} -- {entity['destination'] if 'destination' in entity else entity['destination_entity']}"
         formatted_lines.append(simplified)
 
     return "\n".join(formatted_lines)

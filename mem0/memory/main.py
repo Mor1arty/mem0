@@ -10,14 +10,14 @@ from typing import Any, Dict
 import pytz
 from pydantic import ValidationError
 
-from mem0.configs.base import MemoryConfig, MemoryItem
-from mem0.configs.prompts import get_update_memory_messages
-from mem0.memory.base import MemoryBase
-from mem0.memory.setup import setup_config
-from mem0.memory.storage import SQLiteManager
-from mem0.memory.telemetry import capture_event
-from mem0.memory.utils import get_fact_retrieval_messages, parse_messages
-from mem0.utils.factory import EmbedderFactory, LlmFactory, VectorStoreFactory
+from ..configs.base import MemoryConfig, MemoryItem
+from ..configs.prompts import get_update_memory_messages
+from ..memory.base import MemoryBase
+from .setup import setup_config
+from .storage import SQLiteManager
+from .telemetry import capture_event
+from .utils import get_fact_retrieval_messages, parse_messages
+from ..utils.factory import EmbedderFactory, LlmFactory, VectorStoreFactory
 
 # Setup user config
 setup_config()
@@ -42,7 +42,7 @@ class Memory(MemoryBase):
         self.enable_graph = False
 
         if self.api_version == "v1.1" and self.config.graph_store.config:
-            from mem0.memory.graph_memory import MemoryGraph
+            from .graph_memory import MemoryGraph
 
             self.graph = MemoryGraph(self.config)
             self.enable_graph = True
